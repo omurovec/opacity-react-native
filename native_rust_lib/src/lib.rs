@@ -81,7 +81,7 @@ async fn run(request: Request) -> String {
 
 async fn notarize(request: &Request) -> TlsProof {
     let (prover_socket, session_id) =
-        request_notarization("notary.pse.dev", 443, Some(16384)).await;
+        request_notarization("0.0.0.0", 7047, Some(16384)).await;
 
 
     // A Prover configuration

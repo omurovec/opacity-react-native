@@ -10,35 +10,21 @@ use tokio_util::bytes::Bytes;
 use tracing::debug;
 
 const TLS_ROOT_CA: &str = "-----BEGIN CERTIFICATE-----
-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
+MIICzDCCAbQCCQDDGiT0U3jAszANBgkqhkiG9w0BAQsFADAoMRIwEAYDVQQKDAl0
+bHNub3RhcnkxEjAQBgNVBAMMCXRsc25vdGFyeTAeFw0yMzA2MjYxMTE2MTZaFw0y
+ODA2MjQxMTE2MTZaMCgxEjAQBgNVBAoMCXRsc25vdGFyeTESMBAGA1UEAwwJdGxz
+bm90YXJ5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7Vf+O9l4WNXE
+Xh48MwjnvZ9wGN/Ls+jzzF1Q+J/QfXAYR/REQgJQmuk6sBgJyXUW7Dr5dKAY5tfL
+rjfSaLhdMSxBH/tMepf5HVfEo6jvgk1bdR43DIZw7Z0hfuGUo6qOue8LZry2Nl+9
+VZpG64quRZ///4LdMBQyXcS2yeWKU10yVNBvstKW0i8krqQfbWOIG1nu5nDg5onB
+paKUvbyrLyuHLz8gzKDFezxADTugq2KRXYKIZmyRucK+kmnJnZ/k46GZ84Vju15v
+ktC0CvaR9IfvLfJMAo1Y0lUR4HjQkEAfjnDFYj5B18KFxXABraVD8UxjeMbAHTjf
+i1lV0yp+qQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQABxRni6FZIFeK0KCS1Nrks
+ONLVPfvDSNEKpImWFFoJbaSAAankTiQM1nKTY9SRIhqG2t+xJ6c8+qe905lFFvOy
+r85LMb3z2ZWs4ez6Uy6IdpSdkTULk+1huE/Y9ZqRJ5aQy7PqiHTe+mNDFmHXGdcS
+azHywd4hQeRQhCBXlAG7I18uZR9DPtGaJnvZlfbpD6Iq7x3ocfGhQiV9VJS1JaQ3
+Z7CJs2pa4da5FXQMAbKI2f7V5kbn3bjMp57yeYFo5wJMhEeSFqkrojR0oZDzfxW9
+b0W/PI4R4d2hUvX0fwrQyXbGo8HvYDFUhlMMSF60gUNcbpF6P93tXxR2FM/hnu+T
 -----END CERTIFICATE-----";
 
 
@@ -71,7 +57,7 @@ pub async fn request_notarization(
 
     let notary_tls_socket = notary_connector
         // Require the domain name of notary server to be the same as that in the server cert
-        .connect("notary.pse.dev".try_into().unwrap(), notary_socket)
+        .connect("tlsnotaryserver.io".try_into().unwrap(), notary_socket)
         .await
         .unwrap();
 

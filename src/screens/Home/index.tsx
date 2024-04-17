@@ -1,7 +1,15 @@
 import {NavigationProp} from '@react-navigation/native';
-import React from 'react';
-import {Image, Pressable, SafeAreaView, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {useRecoilValue, useResetRecoilState} from 'recoil';
+
 import {hasTokenSelector, tokenState} from '../../atoms';
 import {NavParams} from '../../navigation';
 
@@ -10,43 +18,48 @@ interface Props {
 }
 
 export const Home = ({navigation}: Props) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const {navigate} = navigation;
   const hasToken = useRecoilValue(hasTokenSelector);
   const resetToken = useResetRecoilState(tokenState);
 
-  const gotoLogin = () => {
-    if (hasToken) {
-      resetToken();
-    }
-    navigate('Login');
+  const login = () => {
+    console.log('login');
   };
   const gotoProfile = () => navigate('Profile');
 
   return (
-    <View className="flex-1 bg-white">
-      <SafeAreaView className="flex-1">
-        <View className="flex-1 items-center justify-center">
+    <View className="bg-dark flex-1">
+      <SafeAreaView className="flex flex-1 items-center">
+        <View className="bg-dark items-center justify-start">
           <Image
-            className="h-24 w-48"
+            className="h-8 w-36"
             source={require('../../../assets/images/logo.png')}
           />
         </View>
-        <View className="mb-4 space-y-3 px-6">
+        <View className="mb-4 flex w-64 flex-1 items-start justify-center">
+          <Text className="mb-1 text-xs text-[#1999ff]">
+            SIGN IN WITH ACCOUNT NAME
+          </Text>
+          <TextInput
+            className="bg-input h-10 w-full items-center justify-center rounded p-2 text-white"
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+          />
+          <Text className="mb-1 mt-4 text-xs text-[#afafaf]">PASSWORD</Text>
+          <TextInput
+            className="bg-input h-10 w-full items-center justify-center rounded p-2 text-white"
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+          />
           <Pressable
-            className="h-14 w-full items-center justify-center rounded-full bg-black"
-            onPress={gotoLogin}>
-            <Text className="text-lg text-white">
-              {hasToken ? 'Re-login' : 'Login'}
-            </Text>
+            className="bg-blueStart mb-40 mt-6 h-10 w-full items-center justify-center rounded"
+            onPress={login}>
+            <Text className="text-lg text-white">Sign in</Text>
           </Pressable>
-
-          {hasToken ? (
-            <Pressable
-              className="h-14 w-full items-center justify-center rounded-full border border-black bg-white"
-              onPress={gotoProfile}>
-              <Text className="text-lg text-black">User profile</Text>
-            </Pressable>
-          ) : null}
         </View>
       </SafeAreaView>
     </View>
