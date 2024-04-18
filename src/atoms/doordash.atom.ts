@@ -21,9 +21,14 @@ export const randomStateState = atom({
   default: randomState(),
 });
 
-export const codeState = atom<string | undefined>({
-  key: 'code',
+export const cookieState = atom<string | undefined>({
+  key: 'cookie',
   default: undefined,
+});
+
+export const hasCookieSelector = selector<boolean>({
+  key: 'has-cookie',
+  get: ({get}) => !!get(cookieState),
 });
 
 export const tokenState = atom<string | undefined>({

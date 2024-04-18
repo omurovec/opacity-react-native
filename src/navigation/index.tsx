@@ -1,10 +1,10 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Login, Profile} from '../screens';
+import {Home, Inventory, Login} from '../screens';
 
 type StackParams = {
   Home: undefined;
   Login: undefined;
-  Profile: undefined;
+  Inventory: undefined;
 };
 
 const Stack = createStackNavigator<StackParams>();
@@ -24,7 +24,7 @@ export const StackNavigation = () => {
           presentation: 'modal',
         }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Inventory" component={Inventory} />
     </Stack.Navigator>
   );
 };
